@@ -1,0 +1,23 @@
+# ARES-1 top-level system configuration.
+# Consumed by ares1_bringup launch files and safety_watchdog/status_monitor
+# defaults. Physical dimensions remain centralized in
+# ares1_description/urdf/ares1_properties.xacro — this file only holds
+# system-level toggles and safety limits.
+
+system:
+  max_linear_speed: 1.5        # m/s
+  max_angular_speed: 1.5       # rad/s
+  cmd_vel_timeout_sec: 0.5
+  scan_timeout_sec: 1.0
+  imu_timeout_sec: 0.5
+  odom_timeout_sec: 0.5
+  joint_state_timeout_sec: 0.5
+  max_pose_covariance_trace: 5.0
+
+  enable_perception: true
+  enable_slam: true
+  enable_navigation: true
+  enable_safety_watchdog: true
+  enable_status_monitor: true
+
+  detector_backend: "simulated"   # "simulated" | "yolo"

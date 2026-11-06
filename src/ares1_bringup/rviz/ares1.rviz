@@ -1,0 +1,162 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+  - Class: rviz_common/Selection
+    Name: Selection
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Plane Cell Count: 40
+      Cell Size: 1
+
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      Description Topic:
+        Value: /robot_description
+      TF Prefix: ""
+
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Names: true
+      Show Axes: true
+      Marker Scale: 0.3
+
+    - Class: rviz_default_plugins/LaserScan
+      Name: LaserScan (RPLIDAR S3)
+      Enabled: true
+      Topic:
+        Value: /scan
+      Size (m): 0.05
+      Color: 255; 0; 0
+
+    - Class: rviz_default_plugins/PointCloud2
+      Name: D456 Point Cloud
+      Enabled: true
+      Topic:
+        Value: /realsense_D456/depth/points
+      Size (m): 0.02
+      Style: Points
+
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Perception Obstacle Points
+      Enabled: true
+      Topic:
+        Value: /perception/obstacle_points
+      Size (m): 0.04
+      Color: 255; 128; 0
+      Style: Points
+
+    - Class: rviz_default_plugins/Image
+      Name: D456 RGB
+      Enabled: true
+      Topic:
+        Value: /realsense_D456/color/image_raw
+
+    - Class: rviz_default_plugins/Image
+      Name: D456 Depth
+      Enabled: false
+      Topic:
+        Value: /realsense_D456/depth/image_raw
+
+    - Class: rviz_default_plugins/Map
+      Name: SLAM Map
+      Enabled: true
+      Topic:
+        Value: /map
+
+    - Class: rviz_default_plugins/Map
+      Name: Global Costmap
+      Enabled: true
+      Topic:
+        Value: /global_costmap/costmap
+      Color Scheme: costmap
+      Alpha: 0.5
+
+    - Class: rviz_default_plugins/Map
+      Name: Local Costmap
+      Enabled: true
+      Topic:
+        Value: /local_costmap/costmap
+      Color Scheme: costmap
+      Alpha: 0.6
+
+    - Class: rviz_default_plugins/Path
+      Name: Global Plan (A*)
+      Enabled: true
+      Topic:
+        Value: /plan
+      Color: 0; 255; 0
+      Line Width: 0.05
+
+    - Class: rviz_default_plugins/MarkerArray
+      Name: MPPI Candidate Trajectories
+      Enabled: true
+      Topic:
+        Value: /local_plan
+
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Perception Object Markers
+      Enabled: true
+      Topic:
+        Value: /perception/object_markers
+
+    - Class: rviz_default_plugins/Odometry
+      Name: Wheel Odometry
+      Enabled: true
+      Topic:
+        Value: /odom
+      Position Tolerance: 0.05
+      Angle Tolerance: 0.05
+      Keep: 200
+
+    - Class: rviz_default_plugins/PoseArray
+      Name: Detected Object Positions
+      Enabled: true
+      Topic:
+        Value: /perception/object_positions
+
+    - Class: rviz_default_plugins/Pose
+      Name: Nav2 Goal
+      Enabled: true
+      Topic:
+        Value: /goal_pose
+      Color: 255; 0; 255
+
+  Enabled: true
+  Global Options:
+    Background Color: 20; 20; 20
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/SetGoal
+      Topic: /goal_pose
+    - Class: rviz_default_plugins/SetInitialPose
+      Topic: /initialpose
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 15
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.7
+      Yaw: 0.8
+Window Geometry:
+  Height: 1000
+  Width: 1600
+  X: 60
+  Y: 60
