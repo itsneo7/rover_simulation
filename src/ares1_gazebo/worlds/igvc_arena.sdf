@@ -1,0 +1,374 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="igvc_arena">
+
+    <physics name="1ms" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 15 0 0 0</pose>
+      <diffuse>0.9 0.9 0.85 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.4 0.3 -0.9</direction>
+    </light>
+
+    <!-- ============================================================
+         GROUND / GRASS TERRAIN
+         ============================================================ -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>60 40</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode><mu>0.85</mu><mu2>0.85</mu2></ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>60 40</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.20 0.45 0.15 1</ambient>
+            <diffuse>0.25 0.55 0.18 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         PERIMETER BOUNDARY WALLS
+         ============================================================ -->
+    <model name="boundary_wall_north">
+      <static>true</static>
+      <pose>0 20 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>60 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>60 0.2 1.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="boundary_wall_south">
+      <static>true</static>
+      <pose>0 -20 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>60 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>60 0.2 1.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="boundary_wall_east">
+      <static>true</static>
+      <pose>30 0 0.5 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>40 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>40 0.2 1.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="boundary_wall_west">
+      <static>true</static>
+      <pose>-30 0 0.5 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>40 0.2 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>40 0.2 1.0</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         STATIC OBSTACLE FIELD — boxes, cylinders, barricades, cones
+         ============================================================ -->
+    <model name="obstacle_box_1">
+      <static>true</static>
+      <pose>4 1.5 0.25 0 0 0.3</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>0.7 0.2 0.1 1</ambient><diffuse>0.7 0.2 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obstacle_box_tall">
+      <static>true</static>
+      <pose>6 -1.0 0.6 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.4 0.4 1.2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.4 0.4 1.2</size></box></geometry>
+          <material><ambient>0.3 0.3 0.6 1</ambient><diffuse>0.3 0.3 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obstacle_box_low">
+      <static>true</static>
+      <pose>5 0.3 0.08 0 0 0.6</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.6 0.3 0.16</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.6 0.3 0.16</size></box></geometry>
+          <material><ambient>0.5 0.5 0.1 1</ambient><diffuse>0.5 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obstacle_cylinder_1">
+      <static>true</static>
+      <pose>8 1.2 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><cylinder><radius>0.25</radius><length>0.8</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.25</radius><length>0.8</length></cylinder></geometry>
+          <material><ambient>0.2 0.5 0.5 1</ambient><diffuse>0.2 0.5 0.5 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="obstacle_cylinder_irregular">
+      <static>true</static>
+      <pose>9 -1.5 0.3 0.15 0.1 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><cylinder><radius>0.18</radius><length>0.6</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.18</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>0.4 0.3 0.2 1</ambient><diffuse>0.4 0.3 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Traffic-cone-style objects -->
+    <model name="cone_1">
+      <static>true</static>
+      <pose>3 0.0 0.15 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><cylinder><radius>0.12</radius><length>0.3</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.12</radius><length>0.3</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="cone_2">
+      <static>true</static>
+      <pose>3 -0.6 0.15 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><cylinder><radius>0.12</radius><length>0.3</length></cylinder></geometry></collision>
+        <visual name="visual"><geometry><cylinder><radius>0.12</radius><length>0.3</length></cylinder></geometry>
+          <material><ambient>0.9 0.4 0.0 1</ambient><diffuse>0.9 0.4 0.0 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Barricade forcing lateral (crab) movement: a wide, tall wall segment
+         spanning most of the corridor width but leaving a narrow lateral
+         gap that favors crab-style approach. -->
+    <model name="lateral_forcing_barricade">
+      <static>true</static>
+      <pose>7 0.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.15 2.4 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.15 2.4 0.8</size></box></geometry>
+          <material><ambient>0.8 0.7 0.1 1</ambient><diffuse>0.8 0.7 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         RAMP / SLOPE SECTION
+         ============================================================ -->
+    <model name="ramp_up">
+      <static>true</static>
+      <pose>12 2.0 0.15 0 -0.12 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.5 1.5 0.1</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.5 1.5 0.1</size></box></geometry>
+          <material><ambient>0.35 0.35 0.35 1</ambient><diffuse>0.35 0.35 0.35 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="ramp_down">
+      <static>true</static>
+      <pose>15.5 2.0 0.15 0 0.12 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.5 1.5 0.1</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.5 1.5 0.1</size></box></geometry>
+          <material><ambient>0.35 0.35 0.35 1</ambient><diffuse>0.35 0.35 0.35 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         UNEVEN / ROUGH TERRAIN SECTION
+         Built from many small randomly tilted low boxes to force each
+         wheel's independent suspension to respond differently.
+         ============================================================ -->
+    <model name="rough_bump_1"><static>true</static><pose>12 -2.0 0.04 0.05 0.03 0.2</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.08</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.08</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+    <model name="rough_bump_2"><static>true</static><pose>12.6 -1.6 0.05 -0.04 0.06 0.5</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.10</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.10</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+    <model name="rough_bump_3"><static>true</static><pose>13.2 -2.3 0.03 0.07 -0.02 0.9</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.06</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.06</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+    <model name="rough_bump_4"><static>true</static><pose>13.8 -1.8 0.06 -0.06 -0.05 0.15</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.12</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.12</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+    <model name="rough_bump_5"><static>true</static><pose>12.3 -2.6 0.04 0.03 0.08 0.7</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.08</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.08</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+    <model name="rough_bump_6"><static>true</static><pose>13.5 -2.5 0.05 -0.02 0.04 0.4</pose>
+      <link name="link"><collision name="collision"><geometry><box><size>0.5 0.5 0.10</size></box></geometry></collision>
+      <visual name="visual"><geometry><box><size>0.5 0.5 0.10</size></box></geometry>
+      <material><ambient>0.3 0.25 0.15 1</ambient><diffuse>0.3 0.25 0.15 1</diffuse></material></visual></link>
+    </model>
+
+    <!-- ============================================================
+         NARROW PASSAGE
+         ============================================================ -->
+    <model name="narrow_wall_a">
+      <static>true</static>
+      <pose>18 0.55 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.0 0.1 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>3.0 0.1 0.8</size></box></geometry>
+          <material><ambient>0.55 0.55 0.55 1</ambient><diffuse>0.55 0.55 0.55 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="narrow_wall_b">
+      <static>true</static>
+      <pose>18 -0.55 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3.0 0.1 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>3.0 0.1 0.8</size></box></geometry>
+          <material><ambient>0.55 0.55 0.55 1</ambient><diffuse>0.55 0.55 0.55 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         DEPRESSION / DROP-OFF DEMONSTRATION AREA
+         ============================================================ -->
+    <model name="depression_rim">
+      <static>true</static>
+      <pose>21 -2 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.0 2.0 0.02</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material><ambient>0.15 0.15 0.15 1</ambient><diffuse>0.15 0.15 0.15 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         DEAD END (for global re-planning demonstrations)
+         ============================================================ -->
+    <model name="dead_end_wall_1">
+      <static>true</static>
+      <pose>24 3 0.4 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.0 0.1 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.0 0.1 0.8</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="dead_end_wall_2">
+      <static>true</static>
+      <pose>25 2 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.0 0.1 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.0 0.1 0.8</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <model name="dead_end_wall_3">
+      <static>true</static>
+      <pose>24 1 0.4 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.0 0.1 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2.0 0.1 0.8</size></box></geometry>
+          <material><ambient>0.6 0.6 0.6 1</ambient><diffuse>0.6 0.6 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         MOVABLE OBSTACLE — for the dynamic obstacle test. Not static so
+         it can be teleported/re-spawned mid-run via `gz service` calls
+         (see ares1_navigation dynamic_obstacle_test documentation).
+         ============================================================ -->
+    <model name="dynamic_obstacle">
+      <pose>10 0.0 0.3 0 0 0</pose>
+      <link name="link">
+        <inertial>
+          <mass>5.0</mass>
+          <inertia><ixx>0.05</ixx><iyy>0.05</iyy><izz>0.05</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+        </inertial>
+        <collision name="collision"><geometry><box><size>0.4 0.4 0.6</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.4 0.4 0.6</size></box></geometry>
+          <material><ambient>0.9 0.1 0.1 1</ambient><diffuse>0.9 0.1 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ============================================================
+         FINAL ALIGNMENT ZONE — visual marker only (no collision) so the
+         rover can practice heading/lateral alignment above it.
+         ============================================================ -->
+    <model name="alignment_target_marker">
+      <static>true</static>
+      <pose>27 0 0.005 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.4</radius><length>0.01</length></cylinder></geometry>
+          <material><ambient>0.1 0.8 0.1 0.6</ambient><diffuse>0.1 0.8 0.1 0.6</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
