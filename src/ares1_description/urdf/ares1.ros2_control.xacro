@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <ros2_control name="ares1_system" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <!-- ============================================================
+         STEERING JOINTS — position command interface
+         ============================================================ -->
+    <joint name="front_left_steering_joint">
+      <command_interface name="position">
+        <param name="min">${-steering_limit_rad}</param>
+        <param name="max">${steering_limit_rad}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="front_right_steering_joint">
+      <command_interface name="position">
+        <param name="min">${-steering_limit_rad}</param>
+        <param name="max">${steering_limit_rad}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="rear_left_steering_joint">
+      <command_interface name="position">
+        <param name="min">${-steering_limit_rad}</param>
+        <param name="max">${steering_limit_rad}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="rear_right_steering_joint">
+      <command_interface name="position">
+        <param name="min">${-steering_limit_rad}</param>
+        <param name="max">${steering_limit_rad}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- ============================================================
+         WHEEL JOINTS — velocity command interface
+         ============================================================ -->
+    <joint name="front_left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">${-wheel_velocity}</param>
+        <param name="max">${wheel_velocity}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="front_right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">${-wheel_velocity}</param>
+        <param name="max">${wheel_velocity}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="rear_left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">${-wheel_velocity}</param>
+        <param name="max">${wheel_velocity}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="rear_right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">${-wheel_velocity}</param>
+        <param name="max">${wheel_velocity}</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- ============================================================
+         SUSPENSION JOINTS — passive (spring/damper handled by physics).
+         State-only interfaces so joint_state_broadcaster still reports
+         suspension travel; no command interface is exposed because the
+         suspension is not actuated.
+         ============================================================ -->
+    <joint name="front_left_suspension_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="front_right_suspension_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_left_suspension_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="rear_right_suspension_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+</robot>

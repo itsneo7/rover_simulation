@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--
+  ARES-1 CENTRAL CONFIGURATION FILE
+  ==================================
+  This is the SINGLE SOURCE OF TRUTH for every physical dimension,
+  mass, and simulation-tuning parameter used by the ARES-1 rover.
+
+  Do not hardcode dimensions anywhere else. If a dimension changes,
+  change it here only.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ============================================================
+       CHASSIS
+       ============================================================ -->
+  <xacro:property name="chassis_length" value="0.80"/>
+  <xacro:property name="chassis_width"  value="0.60"/>
+  <xacro:property name="chassis_height" value="0.25"/>
+  <xacro:property name="chassis_mass"   value="35.0"/>
+  <xacro:property name="chassis_ground_clearance" value="0.18"/>
+
+  <!-- ============================================================
+       WHEEL GEOMETRY / DRIVETRAIN GEOMETRY
+       ============================================================ -->
+  <xacro:property name="wheelbase"    value="0.55"/>  <!-- front-rear wheel center distance -->
+  <xacro:property name="track_width"  value="0.45"/>  <!-- left-right wheel center distance -->
+  <xacro:property name="wheel_radius" value="0.11"/>
+  <xacro:property name="wheel_width"  value="0.05"/>
+  <xacro:property name="wheel_mass"   value="1.8"/>
+
+  <!-- ============================================================
+       STEERING (SWIVEL) LINKS
+       ============================================================ -->
+  <xacro:property name="steering_link_radius" value="0.045"/>
+  <xacro:property name="steering_link_length" value="0.06"/>
+  <xacro:property name="steering_mass"        value="0.9"/>
+  <xacro:property name="steering_limit_rad"   value="3.14159"/>   <!-- +-180 deg, full swivel -->
+  <xacro:property name="steering_effort"      value="40.0"/>
+  <xacro:property name="steering_velocity"    value="6.0"/>
+
+  <!-- ============================================================
+       SUSPENSION
+       ============================================================ -->
+  <xacro:property name="suspension_link_radius" value="0.025"/>
+  <xacro:property name="suspension_link_length" value="0.10"/>
+  <xacro:property name="suspension_mass"        value="0.6"/>
+  <xacro:property name="suspension_travel"      value="0.04"/>    <!-- +-4 cm -->
+  <xacro:property name="suspension_stiffness"   value="15000.0"/> <!-- N/m -->
+  <xacro:property name="suspension_damping"     value="900.0"/>   <!-- N*s/m -->
+  <xacro:property name="suspension_effort"      value="600.0"/>
+
+  <!-- ============================================================
+       WHEEL DRIVE LIMITS
+       ============================================================ -->
+  <xacro:property name="wheel_effort"   value="25.0"/>
+  <xacro:property name="wheel_velocity" value="30.0"/>   <!-- rad/s -->
+  <xacro:property name="max_linear_speed"  value="1.5"/> <!-- m/s, IGVC-appropriate -->
+  <xacro:property name="max_angular_speed" value="1.5"/> <!-- rad/s -->
+
+  <!-- ============================================================
+       SENSOR MOUNT OFFSETS (relative to base_link)
+       ============================================================ -->
+  <xacro:property name="lidar_x" value="0.0"/>
+  <xacro:property name="lidar_y" value="0.0"/>
+  <xacro:property name="lidar_z" value="0.35"/>
+
+  <xacro:property name="d456_x" value="0.42"/>
+  <xacro:property name="d456_y" value="0.0"/>
+  <xacro:property name="d456_z" value="0.22"/>
+  <xacro:property name="d456_pitch" value="0.0"/>
+
+  <xacro:property name="imu_x" value="0.0"/>
+  <xacro:property name="imu_y" value="0.0"/>
+  <xacro:property name="imu_z" value="0.10"/>
+
+  <xacro:property name="tfmini_x" value="0.45"/>
+  <xacro:property name="tfmini_y" value="0.0"/>
+  <xacro:property name="tfmini_z" value="0.12"/>
+
+  <!-- ============================================================
+       LIDAR (RPLIDAR S3) PARAMETERS
+       ============================================================ -->
+  <xacro:property name="lidar_samples"     value="720"/>
+  <xacro:property name="lidar_min_angle"   value="-3.14159"/>
+  <xacro:property name="lidar_max_angle"   value="3.14159"/>
+  <xacro:property name="lidar_min_range"   value="0.10"/>
+  <xacro:property name="lidar_max_range"   value="40.0"/>
+  <xacro:property name="lidar_update_rate" value="15"/>
+  <xacro:property name="lidar_noise_stddev" value="0.015"/>
+
+  <!-- ============================================================
+       D456 CAMERA PARAMETERS
+       ============================================================ -->
+  <xacro:property name="d456_h_fov"      value="1.15192"/> <!-- ~66 deg -->
+  <xacro:property name="d456_img_width"  value="640"/>
+  <xacro:property name="d456_img_height" value="480"/>
+  <xacro:property name="d456_update_rate" value="30"/>
+  <xacro:property name="d456_min_depth"  value="0.20"/>
+  <xacro:property name="d456_max_depth"  value="10.0"/>
+
+  <!-- ============================================================
+       IMU (BNO085) NOISE PARAMETERS
+       ============================================================ -->
+  <xacro:property name="imu_update_rate"        value="100"/>
+  <xacro:property name="imu_gyro_noise_stddev"  value="0.003"/>
+  <xacro:property name="imu_accel_noise_stddev" value="0.03"/>
+  <xacro:property name="imu_gyro_bias_stddev"   value="0.0008"/>
+  <xacro:property name="imu_accel_bias_stddev"  value="0.008"/>
+
+</robot>
